@@ -1,0 +1,25 @@
+articles = []
+p = Path("data/articles.json")
+if p.exists():
+    articles = json.loads(p.read_text(encoding="utf-8"))
+
+# nieuw item:
+articles.insert(0, {
+  "title": article["title"],
+  "chapeau": article["chapeau"],
+  "summary": article["summary"],
+  "path": page_rel,
+  "image": img_rel,
+  "category": category,
+  "date": today
+})
+
+# dedup op path, max 200
+seen=set(); ded=[]
+for a in articles:
+    if a["path"] in seen: 
+        continue
+    seen.add(a["path"]); ded.append(a)
+articles = ded[:200]
+
+p.write_text(json.dumps(articles, ensure_ascii=False, indent=2), encoding="utf-8")
