@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Saitire</title>
+  <meta name="description" content="100% AI-gegenereerde satire. Niet echt nieuws." />
   <link rel="alternate" type="application/rss+xml" title="Saitire RSS" href="/feed.xml" />
   <link rel="stylesheet" href="/assets/site.css" />
 </head>
@@ -11,60 +12,188 @@
   <div class="wrap">
     <header class="header">
       <div>
-        <h1 class="title">Saitire</h1>
+        <a class="logo" href="/"><span class="logoMark">S</span><span class="logoText">Saitire</span></a>
         <p class="subtitle">100% AI-gegenereerde satire. Niet echt nieuws.</p>
       </div>
+
       <div class="header-actions">
+        <a class="pill" href="/categorie/">Categorieën</a>
+        <a class="pill" href="/search/">Zoeken</a>
         <a class="pill" href="/feed.xml">📡 RSS</a>
       </div>
     </header>
 
-    <section class="hero">
-      <div class="hero-top">
-        <div class="label">AI-satire • punch up • geen echte quotes</div>
+    <nav class="nav">
+      <a href="/categorie/politiek/">Politiek</a>
+      <a href="/categorie/economie/">Economie</a>
+      <a href="/categorie/tech-ai/">Tech & AI</a>
+      <a href="/categorie/maatschappij/">Maatschappij</a>
+      <a href="/categorie/sport/">Sport</a>
+      <a href="/categorie/algemeen/">Algemeen</a>
+    </nav>
+
+    <div class="layout">
+      <main>
+        <section class="hero" id="hero" style="display:none;"></section>
+
+        <section class="section">
+          <div class="sectionHead">
+            <h2>Laatste</h2>
+            <a class="sectionLink" href="/categorie/">Alles →</a>
+          </div>
+          <div id="latestGrid" class="grid"></div>
+          <div id="empty" class="empty" style="display:none;">Nog geen artikelen. Kom zo terug.</div>
+        </section>
+
+        <section class="section" id="byCat"></section>
+      </main>
+
+      <aside class="sidebar">
+        <div class="panel">
+          <div class="panelHead">
+            <h3>Snel zoeken</h3>
+          </div>
+          <form class="searchBox" action="/search/">
+            <input name="q" placeholder="Zoek satire…" />
+            <button type="submit">Zoek</button>
+          </form>
+          <p class="panelHint">Zoekt in titel en samenvatting.</p>
+        </div>
+
+        <div class="panel">
+          <div class="panelHead">
+            <h3>Populair</h3>
+          </div>
+          <div id="popularList" class="list"></div>
+          <p class="panelHint">Voorlopig: “meest recent”. Later: echte populariteit.</p>
+        </div>
+
+        <div class="panel">
+          <div class="panelHead">
+            <h3>Over</h3>
+          </div>
+          <p class="panelHint">Alles op deze site is AI-satire. Geen echt nieuws.</p>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="footer">
+      <div>© <span id="y"></span> Saitire</div>
+      <div class="footLinks">
+        <a href="/sitemap.xml">Sitemap</a>
+        <a href="/robots.txt">Robots</a>
       </div>
-
-      <div id="grid" class="grid"></div>
-      <div id="empty" class="empty" style="display:none;">Nog geen artikelen. Kom zo terug.</div>
-    </section>
-
-    <footer class="footer">© <span id="y"></span> Saitire</footer>
+    </footer>
   </div>
 
 <script>
 document.getElementById('y').textContent = new Date().getFullYear();
 
-async function load() {
-  try {
-    const res = await fetch('/data/articles.json', { cache: 'no-store' });
-    if (!res.ok) throw new Error('no data');
-    const items = await res.json();
+const CATS = [
+  { name: "Politiek", slug: "politiek" },
+  { name: "Economie", slug: "economie" },
+  { name: "Tech & AI", slug: "tech-ai" },
+  { name: "Maatschappij", slug: "maatschappij" },
+  { name: "Sport", slug: "sport" },
+  { name: "Algemeen", slug: "algemeen" }
+];
 
-    const grid = document.getElementById('grid');
-    const empty = document.getElementById('empty');
-
-    if (!items.length) { empty.style.display = 'block'; return; }
-
-    grid.innerHTML = items.slice(0, 24).map(it => `
-      <div class="card">
-        <a href="/${it.path}">
-          <img class="thumb" src="/${it.image}" alt="Satire/AI: ${it.summary}">
-          <div class="card-body">
-            <div class="badges">
-              <span class="badge cat">${it.category}</span>
-              <span class="badge">${it.date}</span>
-            </div>
-            <h2>${it.title}</h2>
-            <p class="desc">${it.chapeau}</p>
-          </div>
-        </a>
+function card(it) {
+  return `
+  <div class="card">
+    <a href="/${it.path}">
+      <img class="thumb" src="/${it.image}" alt="Satire/AI: ${escapeHtml(it.summary || "")}">
+      <div class="card-body">
+        <div class="badges">
+          <span class="badge cat">${escapeHtml(it.category || "")}</span>
+          <span class="badge">${escapeHtml(it.date || "")}</span>
+        </div>
+        <h3>${escapeHtml(it.title || "")}</h3>
+        <p class="desc">${escapeHtml(it.chapeau || "")}</p>
       </div>
-    `).join('');
-  } catch(e) {
-    document.getElementById('empty').style.display = 'block';
-  }
+    </a>
+  </div>`;
 }
-load();
+
+function hero(it) {
+  return `
+  <div class="heroCard">
+    <a class="heroLink" href="/${it.path}">
+      <img class="heroThumb" src="/${it.image}" alt="Satire/AI: ${escapeHtml(it.summary || "")}">
+      <div class="heroBody">
+        <div class="badges">
+          <span class="badge cat">${escapeHtml(it.category || "")}</span>
+          <span class="badge">${escapeHtml(it.date || "")}</span>
+          <span class="badge hot">Hoofd</span>
+        </div>
+        <h2>${escapeHtml(it.title || "")}</h2>
+        <p>${escapeHtml(it.chapeau || "")}</p>
+      </div>
+    </a>
+  </div>`;
+}
+
+function listItem(it) {
+  return `<a class="listItem" href="/${it.path}">
+    <div class="listTitle">${escapeHtml(it.title || "")}</div>
+    <div class="listMeta">${escapeHtml(it.category || "")} • ${escapeHtml(it.date || "")}</div>
+  </a>`;
+}
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, (m) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+
+async function load() {
+  const [articlesRes, byCatRes] = await Promise.all([
+    fetch('/data/articles.json', { cache: 'no-store' }),
+    fetch('/data/by_category.json', { cache: 'no-store' })
+  ]);
+
+  if (!articlesRes.ok) {
+    document.getElementById('empty').style.display = 'block';
+    return;
+  }
+
+  const articles = await articlesRes.json();
+  const byCat = byCatRes.ok ? await byCatRes.json() : {};
+
+  if (!articles.length) {
+    document.getElementById('empty').style.display = 'block';
+    return;
+  }
+
+  // Hero (nieuwste)
+  const heroEl = document.getElementById('hero');
+  heroEl.innerHTML = hero(articles[0]);
+  heroEl.style.display = 'block';
+
+  // Laatste grid
+  const latest = articles.slice(1, 13);
+  document.getElementById('latestGrid').innerHTML = latest.map(card).join('');
+
+  // Populair (tijdelijk: top 8 recent)
+  document.getElementById('popularList').innerHTML = articles.slice(0, 8).map(listItem).join('');
+
+  // Per categorie secties
+  const byCatEl = document.getElementById('byCat');
+  byCatEl.innerHTML = CATS.map(c => {
+    const items = (byCat[c.name] || []).slice(0, 4);
+    return `
+      <div class="section">
+        <div class="sectionHead">
+          <h2>${c.name}</h2>
+          <a class="sectionLink" href="/categorie/${c.slug}/">Meer →</a>
+        </div>
+        <div class="grid small">${items.map(card).join('')}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+load().catch(() => {
+  document.getElementById('empty').style.display = 'block';
+});
 </script>
 </body>
 </html>
