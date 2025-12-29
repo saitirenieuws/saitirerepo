@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Zoeken • Saitire</title>
+  <link rel="stylesheet" href="/assets/site.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="header">
+      <div>
+        <a class="logo" href="/"><span class="logoMark">S</span><span class="logoText">Saitire</span></a>
+        <p class="subtitle">Zoeken in titel en samenvatting</p>
+      </div>
+      <div class="header-actions">
+        <a class="pill" href="/categorie/">Categorieën</a>
+        <a class="pill" href="/feed.xml">📡 RSS</a>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="panel">
+        <form class="searchBox" onsubmit="return false;">
+          <input id="q" placeholder="Typ om te zoeken…" />
+          <button id="btn" type="button">Zoek</button>
+        </form>
+        <p class="panelHint">Tip: probeer één of twee kernwoorden.</p>
+      </div>
+
+      <div class="sectionHead" style="margin-top:14px;"><h2>Resultaten</h2></div>
+      <div id="grid" class="grid"></div>
+      <div id="empty" class="empty" style="display:none;">Geen resultaten.</div>
+    </section>
+
+    <footer class="footer">
+      <div>© <span id="y"></span> Saitire</div>
+    </footer>
+  </div>
+
+<script>
+document.getElementById('y').textContent = new Date().getFullYear();
+
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,(m)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+function card(it){
+  return `<div class="card"><a href="/${it.path}">
+    <img class="thumb" src="/${it.image}" alt="Satire/AI: ${escapeHtml(it.summary||"")}">
+    <div class="card-body">
+      <div class="badges"><span class="badge cat">${escapeHtml(it.category||"")}</span><span class="badge">${escapeHtml(it.date||"")}</span></div>
+      <h3>${escapeHtml(it.title||"")}</h3><p class="desc">${escapeHtml(it.chapeau||"")}</p>
+    </div></a></div>`;
+}
+
+async function loadIndex(){
+  const res = await fetch("/data/search.json", {cache:"no-store"});
+  return res.ok ? await res.json() : [];
+}
+
+function getQuery(){
+  const u = new URL(location.href);
+  return (u.searchParams.get("q") || "").trim();
+}
+
+function setQuery(q){
+  const u = new URL(location.href);
+  if (q) u.searchParams.set("q", q);
+  else u.searchParams.delete("q");
+  history.replaceState({}, "", u.toString());
+}
+
+let INDEX = [];
+function matchScore(item, q){
+  const hay = (item.title + " " + item.summary + " " + item.category).toLowerCase();
+  q = q.toLowerCase();
+  if (!q) return 0;
+  if (hay.includes(q)) return 3;
+  const parts = q.split(/\s+/).filter(Boolean);
+  let score = 0;
+  for (const p of parts) if (hay.includes(p)) score += 1;
+  return score;
+}
+
+async function render(){
+  if (!INDEX.length) INDEX = await loadIndex();
+  const q = document.getElementById("q").value.trim();
+  setQuery(q);
+  const grid = document.getElementById("grid");
+  const empty = document.getElementById("empty");
+
+  if (!q) {
+    grid.innerHTML = INDEX.slice(0, 12).map(card).join("");
+    empty.style.display = INDEX.length ? "none" : "block";
+    return;
+  }
+
+  const scored = INDEX
+    .map(it => ({ it, s: matchScore(it, q) }))
+    .filter(x => x.s > 0)
+    .sort((a,b) => b.s - a.s)
+    .slice(0, 48)
+    .map(x => x.it);
+
+  grid.innerHTML = scored.map(card).join("");
+  empty.style.display = scored.length ? "none" : "block";
+}
+
+(async function init(){
+  INDEX = await loadIndex();
+  const q0 = getQuery();
+  document.getElementById("q").value = q0;
+
+  document.getElementById("q").addEventListener("input", () => render());
+  document.getElementById("btn").addEventListener("click", () => render());
+  render();
+})();
+</script>
+</body>
+</html>
