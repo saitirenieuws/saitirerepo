@@ -3,6 +3,7 @@ from pathlib import Path
 import feedparser
 from slugify import slugify
 from PIL import Image, ImageDraw, ImageFont
+from pytrends.request import TrendReq
 
 # ====== INSTELLINGEN ======
 SITE_TITLE = "Saitire"
@@ -28,7 +29,13 @@ OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
 # ====== HULPFUNCTIES ======
 def normalize_title(t: str) -> str:
     return " ".join(t.lower().strip().split())
-
+    
+def get_trending_terms():
+    pytrends = TrendReq(hl="nl-NL", tz=360)
+    pytrends.trending_searches(pn="netherlands")
+    trends = pytrends.trending_searches(pn="netherlands")[0].tolist()
+    return [t.lower() for t in trends]
+    
 def fetch_headlines():
     items = []
     for url in FEEDS:
