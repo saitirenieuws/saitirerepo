@@ -449,7 +449,7 @@ def render_article_page(site_title, label, date, category, article, img_rel):
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{article["title"]} • {site_title}</title>
+<title>{article["title"]} - {site_title}</title>
 <meta name="description" content="{article["summary"]}">
 <style>
   :root {{
@@ -528,13 +528,13 @@ def render_article_page(site_title, label, date, category, article, img_rel):
     el.innerHTML = items.map(it => `
       <a class="listItem" href="/${it.path}">
         <div class="listTitle">${it.title}</div>
-        <div class="listMeta">${it.category} • ${it.date}</div>
+        <div class="listMeta">${it.category} - ${it.date}</div>
       </a>
     `).join("") || `<div class="empty">Nog even geen meer-lezen.</div>`;
   }catch(e){}
 })();
 </script>
-    <div class="footer">© {datetime.date.today().year} {site_title} • Dit is satire, niet echt nieuws.</div>
+    <div class="footer">© {datetime.date.today().year} {site_title} - Dit is satire, niet echt nieuws.</div>
   </div>
 </body>
 </html>
