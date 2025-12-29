@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Categorieën • Saitire</title>
+  <link rel="stylesheet" href="/assets/site.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="header">
+      <div>
+        <a class="logo" href="/"><span class="logoMark">S</span><span class="logoText">Saitire</span></a>
+        <p class="subtitle">Kies een categorie</p>
+      </div>
+      <div class="header-actions">
+        <a class="pill" href="/search/">Zoeken</a>
+        <a class="pill" href="/feed.xml">📡 RSS</a>
+      </div>
+    </header>
+
+    <nav class="nav">
+      <a href="/categorie/politiek/">Politiek</a>
+      <a href="/categorie/economie/">Economie</a>
+      <a href="/categorie/tech-ai/">Tech & AI</a>
+      <a href="/categorie/maatschappij/">Maatschappij</a>
+      <a href="/categorie/sport/">Sport</a>
+      <a href="/categorie/algemeen/">Algemeen</a>
+    </nav>
+
+    <section class="section">
+      <div class="sectionHead"><h2>Categorieën</h2></div>
+      <div class="grid">
+        <div class="card"><a href="/categorie/politiek/"><div class="card-body"><h3>Politiek</h3><p class="desc">Beleid, Kamer, coalities, bestuurlijke gymnastiek.</p></div></a></div>
+        <div class="card"><a href="/categorie/economie/"><div class="card-body"><h3>Economie</h3><p class="desc">Inflatie, banen, KPI’s en ‘marktwerking’ als hobby.</p></div></a></div>
+        <div class="card"><a href="/categorie/tech-ai/"><div class="card-body"><h3>Tech & AI</h3><p class="desc">AI, apps, dataschandalen en futuristische beloftes.</p></div></a></div>
+        <div class="card"><a href="/categorie/maatschappij/"><div class="card-body"><h3>Maatschappij</h3><p class="desc">Wonen, zorg, OV, klimaat en collectieve zucht.</p></div></a></div>
+        <div class="card"><a href="/categorie/sport/"><div class="card-body"><h3>Sport</h3><p class="desc">Overwinningsroes, VAR-verdriet en toernooilogica.</p></div></a></div>
+        <div class="card"><a href="/categorie/algemeen/"><div class="card-body"><h3>Algemeen</h3><p class="desc">Alles dat nergens past maar wél schreeuwt om satire.</p></div></a></div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div>© <span id="y"></span> Saitire</div>
+    </footer>
+  </div>
+<script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</body>
+</html>
