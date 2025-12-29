@@ -211,13 +211,8 @@ def write_sitemap(articles):
 def main():
     articles = load_articles()
 
-    # HIER GAAT NORMAAL JE AI-SCHRIJVER KOMEN
-    # Voor nu: alleen bestaande artikelen opnieuw renderen
-
-    for a in articles:
-        path = CONTENT_DIR / a["path"]
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(render_article_page(a), encoding="utf-8")
+    # GEEN re-render van bestaande content/*.html
+    # articles.json is alleen index-data (titel/chapeau/path/image/etc.)
 
     save_articles(articles)
 
@@ -233,6 +228,8 @@ def main():
 
     write_feed(articles)
     write_sitemap(articles)
+
+    print(f"Klaar. Artikelen in store: {len(articles)}")
 
 
 if __name__ == "__main__":
