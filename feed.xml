@@ -1,51 +1,51 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <rss version="2.0">
 <channel>
-  <title>Saitire</title>
-  <link>https://saitire.nl</link>
-  <description>100% AI-gegenereerde satire. Niet echt nieuws.</description>
-  <language>nl</language>
-  <item>
-    <title>Nieuws gaat over: Bondi Beach-held blikt terug op aanslag: 'Alleen bezig met levens redden'</title>
-    <link>https://saitire.nl/content/2025-12-29-nieuws-gaat-over-bondi-beach-held-blikt-terug-op-aanslag-alleen-bezig-met-levens.html</link>
-    <guid>https://saitire.nl/content/2025-12-29-nieuws-gaat-over-bondi-beach-held-blikt-terug-op-aanslag-alleen-bezig-met-levens.html</guid>
-    <pubDate>Mon, 29 Dec 2025 00:00:00 +0000</pubDate>
-    <description>Satire over: Nieuws gaat over: Bondi Beach-held blikt terug op aanslag: 'Alleen bezig met levens redden'.</description>
-  </item>
-  <item>
-    <title>Nieuws gaat over: Politie zoekt op water naar Oekraïense jongen (16) die vorige week vermist raakte</title>
-    <link>https://saitire.nl/content/2025-12-29-nieuws-gaat-over-politie-zoekt-op-water-naar-oekraiense-jongen-16-die-vorige-wee.html</link>
-    <guid>https://saitire.nl/content/2025-12-29-nieuws-gaat-over-politie-zoekt-op-water-naar-oekraiense-jongen-16-die-vorige-wee.html</guid>
-    <pubDate>Mon, 29 Dec 2025 00:00:00 +0000</pubDate>
-    <description>Satire over: Nieuws gaat over: Politie zoekt op water naar Oekraïense jongen (16) die vorige week vermist raakte.</description>
-  </item>
-  <item>
-    <title>Nieuws gaat over: NU+ | Ondanks de hongerstaking was de sfeer best goed in de Israëlische cel</title>
-    <link>https://saitire.nl/content/2025-12-29-nieuws-gaat-over-nu-ondanks-de-hongerstaking-was-de-sfeer-best-goed-in-de-israel.html</link>
-    <guid>https://saitire.nl/content/2025-12-29-nieuws-gaat-over-nu-ondanks-de-hongerstaking-was-de-sfeer-best-goed-in-de-israel.html</guid>
-    <pubDate>Mon, 29 Dec 2025 00:00:00 +0000</pubDate>
-    <description>Satire over: Nieuws gaat over: NU+ | Ondanks de hongerstaking was de sfeer best goed in de Israëlische cel.</description>
-  </item>
-  <item>
-    <title>Oekraïne voert gesprekken over overname delen van Groningse gasinstallaties</title>
-    <link>https://saitire.nl/content/2025-12-29-oekraine-voert-gesprekken-over-overname-delen-van-groningse-gasinstallaties.html</link>
-    <guid>https://saitire.nl/content/2025-12-29-oekraine-voert-gesprekken-over-overname-delen-van-groningse-gasinstallaties.html</guid>
-    <pubDate>Mon, 29 Dec 2025 00:00:00 +0000</pubDate>
-    <description>Satire over: Oekraïne voert gesprekken over overname delen van Groningse gasinstallaties</description>
-  </item>
-  <item>
-    <title>Bewolkte en wisselvallige jaarwisseling verwacht, 'wind kan verraderlijk zijn'</title>
-    <link>https://saitire.nl/content/2025-12-29-bewolkte-en-wisselvallige-jaarwisseling-verwacht-wind-kan-verraderlijk-zijn.html</link>
-    <guid>https://saitire.nl/content/2025-12-29-bewolkte-en-wisselvallige-jaarwisseling-verwacht-wind-kan-verraderlijk-zijn.html</guid>
-    <pubDate>Mon, 29 Dec 2025 00:00:00 +0000</pubDate>
-    <description>Satire over: Bewolkte en wisselvallige jaarwisseling verwacht, 'wind kan verraderlijk zijn'</description>
-  </item>
-  <item>
-    <title>Video | Schaatsers sleuren man uit wak in de Weerribben</title>
-    <link>https://saitire.nl/content/2025-12-29-video-schaatsers-sleuren-man-uit-wak-in-de-weerribben.html</link>
-    <guid>https://saitire.nl/content/2025-12-29-video-schaatsers-sleuren-man-uit-wak-in-de-weerribben.html</guid>
-    <pubDate>Mon, 29 Dec 2025 00:00:00 +0000</pubDate>
-    <description>Satire over: Video | Schaatsers sleuren man uit wak in de Weerribben</description>
-  </item>
+<title>Saitire</title>
+<link>https://saitire.nl</link>
+<description>100% AI satire</description>
+
+<item>
+  <title>Nieuws gaat over: Bondi Beach-held blikt terug op aanslag: 'Alleen bezig met levens redden'</title>
+  <link>https://saitire.nl/content/2025-12-29-nieuws-gaat-over-bondi-beach-held-blikt-terug-op-aanslag-alleen-bezig-met-levens.html</link>
+  <description>Satire over: Nieuws gaat over: Bondi Beach-held blikt terug op aanslag: 'Alleen bezig met levens redden'.</description>
+  <pubDate>2025-12-29</pubDate>
+</item>
+
+<item>
+  <title>Nieuws gaat over: Politie zoekt op water naar Oekraïense jongen (16) die vorige week vermist raakte</title>
+  <link>https://saitire.nl/content/2025-12-29-nieuws-gaat-over-politie-zoekt-op-water-naar-oekraiense-jongen-16-die-vorige-wee.html</link>
+  <description>Satire over: Nieuws gaat over: Politie zoekt op water naar Oekraïense jongen (16) die vorige week vermist raakte.</description>
+  <pubDate>2025-12-29</pubDate>
+</item>
+
+<item>
+  <title>Nieuws gaat over: NU+ | Ondanks de hongerstaking was de sfeer best goed in de Israëlische cel</title>
+  <link>https://saitire.nl/content/2025-12-29-nieuws-gaat-over-nu-ondanks-de-hongerstaking-was-de-sfeer-best-goed-in-de-israel.html</link>
+  <description>Satire over: Nieuws gaat over: NU+ | Ondanks de hongerstaking was de sfeer best goed in de Israëlische cel.</description>
+  <pubDate>2025-12-29</pubDate>
+</item>
+
+<item>
+  <title>Oekraïne voert gesprekken over overname delen van Groningse gasinstallaties</title>
+  <link>https://saitire.nl/content/2025-12-29-oekraine-voert-gesprekken-over-overname-delen-van-groningse-gasinstallaties.html</link>
+  <description>Satire over: Oekraïne voert gesprekken over overname delen van Groningse gasinstallaties</description>
+  <pubDate>2025-12-29</pubDate>
+</item>
+
+<item>
+  <title>Bewolkte en wisselvallige jaarwisseling verwacht, 'wind kan verraderlijk zijn'</title>
+  <link>https://saitire.nl/content/2025-12-29-bewolkte-en-wisselvallige-jaarwisseling-verwacht-wind-kan-verraderlijk-zijn.html</link>
+  <description>Satire over: Bewolkte en wisselvallige jaarwisseling verwacht, 'wind kan verraderlijk zijn'</description>
+  <pubDate>2025-12-29</pubDate>
+</item>
+
+<item>
+  <title>Video | Schaatsers sleuren man uit wak in de Weerribben</title>
+  <link>https://saitire.nl/content/2025-12-29-video-schaatsers-sleuren-man-uit-wak-in-de-weerribben.html</link>
+  <description>Satire over: Video | Schaatsers sleuren man uit wak in de Weerribben</description>
+  <pubDate>2025-12-29</pubDate>
+</item>
+
 </channel>
 </rss>
