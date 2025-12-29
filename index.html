@@ -2,16 +2,88 @@
 <html lang="nl">
 <head>
 <meta charset="UTF-8">
-<title>AI Satire Nieuws</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Saitire</title>
+<link rel="alternate" type="application/rss+xml" title="Saitire RSS" href="/feed.xml" />
 <style>
-body { font-family: Arial, sans-serif; max-width: 800px; margin: auto; padding: 20px; }
-.label { color: red; font-weight: bold; }
+  :root{--fg:#141415;--muted:#6b7280;--bg:#f8fafc;--card:#fff;--badge:#eef2ff;--badgefg:#3730a3;--accent:#ef4444;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;}
+  header{max-width:1000px;margin:24px auto 8px;padding:0 16px}
+  h1{margin:0 0 4px;font-size:28px}
+  .label{color:var(--accent);font-weight:700}
+  .meta{display:flex;gap:12px;align-items:center;color:var(--muted);font-size:14px;margin-top:6px}
+  .grid{max-width:1000px;margin:12px auto;padding:16px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+  .card{background:var(--card);border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.06);overflow:hidden;display:flex;flex-direction:column}
+  .thumb{aspect-ratio:16/9;width:100%;object-fit:cover;background:#e5e7eb}
+  .card-body{padding:14px}
+  .badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+  .badge{background:var(--badge);color:var(--badgefg);border-radius:999px;padding:4px 10px;font-size:12px;font-weight:700}
+  .card h2{margin:0 0 8px;font-size:18px;line-height:1.25}
+  .card p{margin:0;color:var(--muted);font-size:14px}
+  .card a{text-decoration:none;color:inherit}
+  footer{max-width:1000px;margin:24px auto 40px;padding:0 16px;color:var(--muted);font-size:14px}
 </style>
 </head>
 <body>
-<h1>AI Satire Nieuws</h1>
-<p class="label">100% AI-gegenereerde satire</p>
-<p>De site draait. Artikelen volgen automatisch.</p>
+<header>
+  <h1>Saitire</h1>
+  <div class="label">100% AI-gegenereerde satire</div>
+  <div class="meta">
+    <div>Dit is satire, niet echt nieuws.</div>
+    <div>•</div>
+    <div><a href="/feed.xml">RSS feed</a></div>
+  </div>
+</header>
+
+<div class="grid" id="content">
+
+<div class="card">
+  <a href="/content/2025-12-29-tien-aanhoudingen-voor-onrust-floradorp-persoon-nog-vast-voor-brandstichting.html">
+    <img class="thumb" src="/public/images/tien-aanhoudingen-voor-onrust-floradorp-persoon-nog-vast-voor-brandstichting.png" alt="Satire/AI: Satire over: Tien aanhoudingen voor onrust Floradorp, persoon nog vast voor brandstichting">
+    <div class="card-body">
+      <div class="badges">
+        <span class="badge">Algemeen</span>
+        <span class="badge">2025-12-29</span>
+      </div>
+      <h2>Tien aanhoudingen voor onrust Floradorp, persoon nog vast voor brandstichting</h2>
+      <p>De werkelijkheid houdt een spiegel voor, wij zetten er confetti op.</p>
+    </div>
+  </a>
+</div>
+
+
+<div class="card">
+  <a href="/content/2025-12-29-wat-wil-jij-weten-over-aanvullende-zorgverzekeringen.html">
+    <img class="thumb" src="/public/images/wat-wil-jij-weten-over-aanvullende-zorgverzekeringen.png" alt="Satire/AI: Satire over: Wat wil jij weten over aanvullende zorgverzekeringen?">
+    <div class="card-body">
+      <div class="badges">
+        <span class="badge">Politiek</span>
+        <span class="badge">2025-12-29</span>
+      </div>
+      <h2>Wat wil jij weten over aanvullende zorgverzekeringen?</h2>
+      <p>De werkelijkheid houdt een spiegel voor, wij zetten er confetti op.</p>
+    </div>
+  </a>
+</div>
+
+
+<div class="card">
+  <a href="/content/2025-12-29-recordaantal-tikkies-in-2025-veel-op-koningsdag-en-toen-vakantiegeld-kwam.html">
+    <img class="thumb" src="/public/images/recordaantal-tikkies-in-2025-veel-op-koningsdag-en-toen-vakantiegeld-kwam.png" alt="Satire/AI: Satire over: Recordaantal Tikkies in 2025, veel op Koningsdag en toen vakantiegeld kwam">
+    <div class="card-body">
+      <div class="badges">
+        <span class="badge">Algemeen</span>
+        <span class="badge">2025-12-29</span>
+      </div>
+      <h2>Recordaantal Tikkies in 2025, veel op Koningsdag en toen vakantiegeld kwam</h2>
+      <p>De werkelijkheid houdt een spiegel voor, wij zetten er confetti op.</p>
+    </div>
+  </a>
+</div>
+
+</div>
+
+<footer>© 2025 Saitire</footer>
 </body>
 </html>
