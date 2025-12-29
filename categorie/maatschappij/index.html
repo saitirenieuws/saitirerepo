@@ -1,1 +1,73 @@
+<!DOCTYPE html><html lang="nl"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Maatschappij • Saitire</title><link rel="stylesheet" href="/assets/site.css"/></head>
+<body><div class="wrap">
+<header class="header">
+  <div><a class="logo" href="/"><span class="logoMark">S</span><span class="logoText">Saitire</span></a>
+  <p class="subtitle">Categorie: Maatschappij</p></div>
+  <div class="header-actions"><a class="pill" href="/search/">Zoeken</a><a class="pill" href="/feed.xml">📡 RSS</a></div>
+</header>
+<nav class="nav">
+  <a href="/categorie/politiek/">Politiek</a><a href="/categorie/economie/">Economie</a><a href="/categorie/tech-ai/">Tech & AI</a>
+  <a href="/categorie/maatschappij/">Maatschappij</a><a href="/categorie/sport/">Sport</a><a href="/categorie/algemeen/">Algemeen</a>
+</nav>
+
+<section class="section">
+  <div class="sectionHead"><h2>Maatschappij</h2></div>
+  <div id="grid" class="grid"></div>
+  <div id="pager" class="panel" style="margin-top:14px; display:none;"></div>
+</section>
+
+<footer class="footer"><div>© <span id="y"></span> Saitire</div></footer>
+</div>
+
+<script>
+document.getElementById('y').textContent = new Date().getFullYear();
+const CAT_NAME = "Maatschappij";
+const PER_PAGE = 20;
+
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,(m)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+function card(it){
+  return `<div class="card"><a href="/${it.path}">
+    <img class="thumb" src="/${it.image}" alt="Satire/AI: ${escapeHtml(it.summary||"")}">
+    <div class="card-body">
+      <div class="badges"><span class="badge cat">${escapeHtml(it.category||"")}</span><span class="badge">${escapeHtml(it.date||"")}</span></div>
+      <h3>${escapeHtml(it.title||"")}</h3><p class="desc">${escapeHtml(it.chapeau||"")}</p>
+    </div></a></div>`;
+}
+function getPage(){
+  const u = new URL(location.href);
+  return Math.max(1, parseInt(u.searchParams.get("p")||"1",10));
+}
+function setPage(p){
+  const u = new URL(location.href);
+  u.searchParams.set("p", String(p));
+  location.href = u.toString();
+}
+
+async function load(){
+  const res = await fetch("/data/by_category.json", {cache:"no-store"});
+  const byCat = res.ok ? await res.json() : {};
+  const items = (byCat[CAT_NAME]||[]);
+  const page = getPage();
+  const start = (page-1)*PER_PAGE;
+  const slice = items.slice(start, start+PER_PAGE);
+
+  document.getElementById("grid").innerHTML = slice.map(card).join("") || `<div class="empty">Nog niets in deze categorie.</div>`;
+
+  const totalPages = Math.max(1, Math.ceil(items.length / PER_PAGE));
+  const pager = document.getElementById("pager");
+  if (totalPages > 1) {
+    pager.style.display = "block";
+    pager.innerHTML = `
+      <div style="display:flex;gap:10px;align-items:center;justify-content:space-between">
+        <button class="pill" type="button" ${page<=1?"disabled":""} onclick="setPage(${page-1})">← Vorige</button>
+        <div style="color:var(--muted);font-weight:900">Pagina ${page} / ${totalPages}</div>
+        <button class="pill" type="button" ${page>=totalPages?"disabled":""} onclick="setPage(${page+1})">Volgende →</button>
+      </div>`;
+  }
+}
+load();
+</script>
+</body></html>
 
