@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>404 • Saitire</title>
+  <link rel="stylesheet" href="/assets/site.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="header">
+      <div>
+        <a class="logo" href="/"><span class="logoMark">S</span><span class="logoText">Saitire</span></a>
+        <p class="subtitle">Deze pagina bestaat niet (maar dat was vast een pilot).</p>
+      </div>
+    </header>
+
+    <div class="panel">
+      <h3 style="margin:0 0 10px;">404</h3>
+      <p class="panelHint">Ga terug naar de homepage of probeer zoeken.</p>
+      <div class="header-actions" style="margin-top:10px;">
+        <a class="pill" href="/">Home</a>
+        <a class="pill" href="/search/">Zoeken</a>
+        <a class="pill" href="/categorie/">Categorieën</a>
+      </div>
+    </div>
+
+    <footer class="footer"><div>© <span id="y"></span> Saitire</div></footer>
+  </div>
+<script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</body>
+</html>
