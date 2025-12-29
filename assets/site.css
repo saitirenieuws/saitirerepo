@@ -1,0 +1,36 @@
+:root{
+  --bg:#0b1020; --panel:rgba(255,255,255,.06); --text:rgba(255,255,255,.92);
+  --muted:rgba(255,255,255,.70); --brand:#7c3aed; --green:#22c55e; --ring:rgba(124,58,237,.35);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(900px 500px at 10% 10%, rgba(124,58,237,.25), transparent 60%),
+    radial-gradient(800px 500px at 90% 20%, rgba(34,197,94,.18), transparent 55%),
+    var(--bg);
+}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:28px 18px 60px}
+.header{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
+.title{margin:0;font-size:30px;letter-spacing:-.02em}
+.subtitle{margin:6px 0 0;color:var(--muted);font-size:14px;max-width:65ch}
+.header-actions{display:flex;gap:10px;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:9px 12px;border-radius:999px;background:var(--panel);border:1px solid rgba(255,255,255,.12);text-decoration:none;color:var(--muted)}
+.pill:hover{outline:2px solid var(--ring)}
+.hero{margin-top:16px;border-radius:18px;padding:18px;border:1px solid rgba(255,255,255,.12);background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.hero-top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.label{font-weight:800;color:rgba(255,255,255,.86)}
+.grid{margin-top:14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px}
+.card{border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.12);background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));box-shadow:0 10px 30px rgba(0,0,0,.22)}
+.thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.card-body{padding:14px 14px 16px}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.badge{font-size:12px;font-weight:800;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.12);color:var(--muted)}
+.badge.cat{background:rgba(34,197,94,.15);border-color:rgba(34,197,94,.25);color:rgba(255,255,255,.86)}
+h2{margin:0 0 8px;font-size:18px;line-height:1.25;letter-spacing:-.01em}
+.desc{margin:0;color:var(--muted);font-size:14px;line-height:1.45}
+.footer{margin-top:22px;color:var(--muted);font-size:13px}
+.empty{color:var(--muted);padding:12px}
