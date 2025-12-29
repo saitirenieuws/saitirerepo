@@ -1,3 +1,4 @@
 feedparser
 pillow
 python-slugify
+pytrends
