@@ -174,7 +174,7 @@ def make_meme_card(title, out_path):
 
     # klein watermerk onderin rechts
     wm = "SATIRE / AI"
-    font_wm = load_font(22)
+    font_wm = load_font(18)
     w = d.textlength(wm, font=font_wm)
     d.text((W - w - 24, H - 34), wm, fill=(120,120,120), font=font_wm)
 
@@ -188,23 +188,68 @@ def render_article_page(site_title, label, date, category, article, img_rel):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{article["title"]} • {site_title}</title>
 <meta name="description" content="{article["summary"]}">
+<style>
+  :root {{
+    --bg:#0b1020; --panel:rgba(255,255,255,.06); --text:rgba(255,255,255,.92);
+    --muted:rgba(255,255,255,.70); --brand:#7c3aed; --danger:#ef4444; --ring:rgba(124,58,237,.35);
+  }}
+  *{{box-sizing:border-box}}
+  body{{
+    margin:0;
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    color:var(--text);
+    background:
+      radial-gradient(900px 500px at 10% 10%, rgba(124,58,237,.25), transparent 60%),
+      radial-gradient(800px 500px at 90% 20%, rgba(34,197,94,.18), transparent 55%),
+      var(--bg);
+  }}
+  a{{color:inherit}}
+  .wrap{{max-width:860px;margin:0 auto;padding:26px 18px 70px}}
+  .top{{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}}
+  .home{{text-decoration:none;padding:10px 12px;border-radius:12px;background:var(--panel);border:1px solid rgba(255,255,255,.10)}}
+  .home:hover{{outline:2px solid var(--ring)}}
+  .label{{color:var(--danger);font-weight:900}}
+  .meta{{display:flex;gap:10px;flex-wrap:wrap;align-items:center;color:var(--muted);font-size:13px;margin-top:10px}}
+  .badge{{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.12)}}
+  .badge.cat{{background:rgba(34,197,94,.15);border-color:rgba(34,197,94,.25);color:rgba(255,255,255,.86);font-weight:800}}
+  h1{{margin:16px 0 6px;font-size:34px;letter-spacing:-0.02em;line-height:1.12}}
+  .chapeau{{color:var(--muted);font-style:italic;margin:0 0 14px;line-height:1.5}}
+  .card{{border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.12);background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));box-shadow:0 10px 30px rgba(0,0,0,.22)}}
+  img{{width:100%;height:auto;display:block}}
+  .content{{padding:18px}}
+  .content p{{margin:0 0 12px;line-height:1.65}}
+  .facts{{margin-top:16px;padding:14px;border-left:4px solid rgba(255,255,255,.22);background:rgba(255,255,255,.06);border-radius:12px;color:var(--muted)}}
+  .facts b{{color:rgba(255,255,255,.9)}}
+  .divider{{height:1px;background:rgba(255,255,255,.10);margin:18px 0}}
+  .footer{{margin-top:18px;color:var(--muted);font-size:13px}}
+</style>
 </head>
-<body style="font-family:Arial,sans-serif;max-width:800px;margin:auto;padding:20px;">
-<nav><a href="/index.html">← Home</a></nav>
-<h1>{site_title}</h1>
-<p style="color:#ef4444;font-weight:700">{label}</p>
-<div style="display:flex;gap:8px;align-items:center;color:#6b7280;font-size:14px;">
-  <span style="background:#eef2ff;color:#3730a3;border-radius:999px;padding:4px 10px;font-weight:700">{category}</span>
-  <span>•</span>
-  <time datetime="{date}">{date}</time>
-</div>
-<h2 style="margin:10px 0 6px">{article["title"]}</h2>
-<p><em>{article["chapeau"]}</em></p>
-<img src="/{img_rel}" alt="Satire/AI: {article["summary"]}" style="max-width:100%;height:auto;margin:10px 0;">
-{article["body_html"]}
-<div style="background:#f7f7f7;padding:10px;border-left:4px solid #ddd;font-size:0.95em;margin-top:14px">{article["facts_box"]}</div>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <a class="home" href="/index.html">← Home</a>
+      <div class="label">{label}</div>
+    </div>
 
-<!-- Giscus: plak hier later je snippet (optioneel) -->
+    <div class="meta">
+      <span class="badge cat">{category}</span>
+      <span class="badge">{date}</span>
+      <span class="badge">SATIRE</span>
+    </div>
+
+    <h1>{article["title"]}</h1>
+    <p class="chapeau">{article["chapeau"]}</p>
+
+    <div class="card">
+      <img src="/{img_rel}" alt="Satire/AI: {article["summary"]}">
+      <div class="content">
+        {article["body_html"]}
+        <div class="facts"><b>Wat is er echt gebeurd?</b><br>{article["facts_box"]}</div>
+      </div>
+    </div>
+
+    <div class="footer">© {datetime.date.today().year} {site_title} • Dit is satire, niet echt nieuws.</div>
+  </div>
 </body>
 </html>
 """
@@ -218,41 +263,88 @@ def build_index(cards_html):
 <title>{SITE_TITLE}</title>
 <link rel="alternate" type="application/rss+xml" title="{SITE_TITLE} RSS" href="/feed.xml" />
 <style>
-  :root{{--fg:#141415;--muted:#6b7280;--bg:#f8fafc;--card:#fff;--badge:#eef2ff;--badgefg:#3730a3;--accent:#ef4444;}}
+  :root {{
+    --bg: #0b1020;
+    --panel: rgba(255,255,255,.06);
+    --panel2: rgba(255,255,255,.10);
+    --text: rgba(255,255,255,.92);
+    --muted: rgba(255,255,255,.70);
+    --brand: #7c3aed;
+    --brand2:#22c55e;
+    --danger:#ef4444;
+    --ring: rgba(124,58,237,.35);
+  }}
   *{{box-sizing:border-box}}
-  body{{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;}}
-  header{{max-width:1000px;margin:24px auto 8px;padding:0 16px}}
-  h1{{margin:0 0 4px;font-size:28px}}
-  .label{{color:var(--accent);font-weight:700}}
-  .meta{{display:flex;gap:12px;align-items:center;color:var(--muted);font-size:14px;margin-top:6px}}
-  .grid{{max-width:1000px;margin:12px auto;padding:16px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}}
-  .card{{background:var(--card);border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.06);overflow:hidden;display:flex;flex-direction:column}}
-  .thumb{{aspect-ratio:16/9;width:100%;object-fit:cover;background:#e5e7eb}}
-  .card-body{{padding:14px}}
-  .badges{{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}}
-  .badge{{background:var(--badge);color:var(--badgefg);border-radius:999px;padding:4px 10px;font-size:12px;font-weight:700}}
-  .card h2{{margin:0 0 8px;font-size:18px;line-height:1.25}}
-  .card p{{margin:0;color:var(--muted);font-size:14px}}
-  .card a{{text-decoration:none;color:inherit}}
-  footer{{max-width:1000px;margin:24px auto 40px;padding:0 16px;color:var(--muted);font-size:14px}}
+  body{{
+    margin:0;
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    color:var(--text);
+    background:
+      radial-gradient(900px 500px at 10% 10%, rgba(124,58,237,.25), transparent 60%),
+      radial-gradient(800px 500px at 90% 20%, rgba(34,197,94,.18), transparent 55%),
+      radial-gradient(900px 600px at 50% 100%, rgba(59,130,246,.10), transparent 60%),
+      var(--bg);
+  }}
+  a{color:inherit}
+  .wrap{max-width:1120px;margin:0 auto;padding:28px 18px 60px}
+  header{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;margin-bottom:18px}
+  .brand{display:flex;flex-direction:column;gap:6px}
+  h1{margin:0;font-size:28px;letter-spacing:-0.02em}
+  .tagline{color:var(--muted);font-size:14px;max-width:60ch}
+  .pillrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .pill{display:inline-flex;gap:8px;align-items:center;padding:8px 12px;border-radius:999px;background:var(--panel);border:1px solid rgba(255,255,255,.10);font-size:13px;color:var(--muted)}
+  .pill b{color:var(--text)}
+  .pill a{text-decoration:none}
+  .hero{margin-top:10px;border-radius:18px;padding:18px;border:1px solid rgba(255,255,255,.12);background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));box-shadow:0 10px 30px rgba(0,0,0,.25)}
+  .hero-top{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+  .label{color:var(--danger);font-weight:800}
+  .btn{display:inline-flex;gap:10px;align-items:center;padding:10px 14px;border-radius:12px;background:rgba(124,58,237,.22);border:1px solid rgba(124,58,237,.35);text-decoration:none}
+  .btn:hover{outline:2px solid var(--ring)}
+  .grid{margin-top:18px;display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px}
+  .card{border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.12);background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));box-shadow:0 10px 30px rgba(0,0,0,.22)}
+  .thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;filter:saturate(1.05) contrast(1.02)}
+  .card-body{padding:14px 14px 16px}
+  .badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+  .badge{font-size:12px;font-weight:800;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.12);color:var(--muted)}
+  .badge.cat{background:rgba(34,197,94,.15);border-color:rgba(34,197,94,.25);color:rgba(255,255,255,.86)}
+  h2{margin:0 0 8px;font-size:18px;line-height:1.25;letter-spacing:-0.01em}
+  .desc{margin:0;color:var(--muted);font-size:14px;line-height:1.45}
+  .card a{text-decoration:none;display:block}
+  .footer{margin-top:28px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .small{opacity:.9}
 </style>
 </head>
 <body>
-<header>
-  <h1>{SITE_TITLE}</h1>
-  <div class="label">100% AI-gegenereerde satire</div>
-  <div class="meta">
-    <div>Dit is satire, niet echt nieuws.</div>
-    <div>•</div>
-    <div><a href="/feed.xml">RSS feed</a></div>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <h1>{SITE_TITLE}</h1>
+        <div class="tagline">{SITE_DESC}</div>
+      </div>
+      <div class="pillrow">
+        <div class="pill">🔴 <b>AI-satire</b> • niet echt nieuws</div>
+        <div class="pill"><a href="/feed.xml">📡 RSS</a></div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-top">
+        <div>
+          <div class="label">100% AI-gegenereerde satire</div>
+          <div class="small" style="color:var(--muted);margin-top:6px">Hard op de inhoud, zacht voor mensen. Punch up.</div>
+        </div>
+        <a class="btn" href="/feed.xml">Volg via RSS →</a>
+      </div>
+      <div class="grid" id="content">
+        {cards_html}
+      </div>
+    </section>
+
+    <div class="footer">
+      <div>© {datetime.date.today().year} {SITE_TITLE}</div>
+      <div class="small">Tip: deel je favoriete headline alsof het waar is (maar dan niet).</div>
+    </div>
   </div>
-</header>
-
-<div class="grid" id="content">
-{cards_html}
-</div>
-
-<footer>© {datetime.date.today().year} {SITE_TITLE}</footer>
 </body>
 </html>
 """
