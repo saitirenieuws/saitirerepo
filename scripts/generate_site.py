@@ -369,9 +369,10 @@ def generate_feed(items):
 # MAIN
 # =========================
 def main():
-    Path("content").mkdir(exist_ok=True)
+    Path("content").mkdir(parents=True, exist_ok=True)
+    Path("public").mkdir(parents=True, exist_ok=True)
     Path("public/images").mkdir(parents=True, exist_ok=True)
-    Path("data").mkdir(exist_ok=True)
+    Path("data").mkdir(parents=True, exist_ok=True)
 
     # haal headlines op
     headlines = fetch_headlines()
@@ -407,8 +408,11 @@ def main():
 
         # maak afbeelding als die nog niet bestaat
         img_path = Path(img_rel)
-        if not img_path.exists():
-            make_meme_card(article["title"], img_path)
+    if not img_path.exists():
+        print("MAAK AFBEELDING:", img_rel)
+        make_meme_card(article["title"], img_path)
+    else:
+        print("AFBEELDING BESTAAT AL:", img_rel)
 
         # schrijf artikelpagina
         html = render_article_page(SITE_TITLE, LABEL, today, category, article, img_rel)
