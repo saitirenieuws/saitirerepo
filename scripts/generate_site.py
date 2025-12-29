@@ -510,7 +510,30 @@ def render_article_page(site_title, label, date, category, article, img_rel):
         <div class="facts"><b>Wat is er echt gebeurd?</b><br>{article["facts_box"]}</div>
       </div>
     </div>
+<div class="panel" style="margin-top:14px;">
+  <div class="panelHead"><h3>Meer lezen</h3></div>
+  <div id="more" class="list"></div>
+  <p class="panelHint">Meer uit dezelfde categorie.</p>
+</div>
 
+<script>
+(async function(){
+  try{
+    const res = await fetch("/data/by_category.json", {cache:"no-store"});
+    if(!res.ok) return;
+    const byCat = await res.json();
+    const cat = ${json.dumps(category)};
+    const items = (byCat[cat] || []).filter(x => ("/"+x.path) !== location.pathname).slice(0, 5);
+    const el = document.getElementById("more");
+    el.innerHTML = items.map(it => `
+      <a class="listItem" href="/${it.path}">
+        <div class="listTitle">${it.title}</div>
+        <div class="listMeta">${it.category} • ${it.date}</div>
+      </a>
+    `).join("") || `<div class="empty">Nog even geen meer-lezen.</div>`;
+  }catch(e){}
+})();
+</script>
     <div class="footer">© {datetime.date.today().year} {site_title} • Dit is satire, niet echt nieuws.</div>
   </div>
 </body>
@@ -544,6 +567,73 @@ def add_article(items, new_item):
         seen.add(path)
         out.append(it)
     return out[:MAX_STORE]
+
+def slug_category(name: str) -> str:
+    m = {
+        "Politiek": "politiek",
+        "Economie": "economie",
+        "Tech & AI": "tech-ai",
+        "Maatschappij": "maatschappij",
+        "Sport": "sport",
+        "Algemeen": "algemeen",
+    }
+    return m.get(name, slugify(name))
+
+def build_by_category(articles):
+    by = {}
+    for a in articles:
+        cat = a.get("category") or "Algemeen"
+        by.setdefault(cat, []).append(a)
+    # sorteer per categorie op datum (desc) en dan titel
+    for cat in by:
+        by[cat].sort(key=lambda x: (x.get("date",""), x.get("title","")), reverse=True)
+    return by
+
+def build_search_index(articles):
+    # minimale velden voor client-side search
+    out = []
+    for a in articles:
+        out.append({
+            "title": a.get("title",""),
+            "summary": a.get("summary",""),
+            "chapeau": a.get("chapeau",""),
+            "path": a.get("path",""),
+            "image": a.get("image",""),
+            "category": a.get("category",""),
+            "date": a.get("date",""),
+        })
+    return out
+
+def write_sitemap(articles):
+    # sitemap: homepage + categorieën + alle artikelen
+    cats = ["Politiek","Economie","Tech & AI","Maatschappij","Sport","Algemeen"]
+
+    urls = []
+    urls.append(SITE_URL + "/")
+    urls.append(SITE_URL + "/categorie/")
+    urls.append(SITE_URL + "/search/")
+
+    for c in cats:
+        urls.append(SITE_URL + f"/categorie/{slug_category(c)}/")
+
+    for a in articles:
+        p = a.get("path","")
+        if p:
+            urls.append(SITE_URL + "/" + p)
+
+    today = datetime.date.today().isoformat()
+    body = "\n".join(
+        f"""  <url><loc>{u}</loc><lastmod>{today}</lastmod></url>"""
+        for u in sorted(set(urls))
+    )
+
+    xml = f"""<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{body}
+</urlset>
+"""
+    Path("sitemap.xml").write_text(xml, encoding="utf-8")
+
 
 # =========================
 # HELPERS: RSS
@@ -654,6 +744,15 @@ def main():
     # schrijf data + rss
     save_articles(articles_store)
     Path("feed.xml").write_text(generate_feed(articles_store), encoding="utf-8")
+    # extra data voor site-functionaliteit
+    by_cat = build_by_category(articles_store)
+    Path("data/by_category.json").write_text(json.dumps(by_cat, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    search_idx = build_search_index(articles_store)
+    Path("data/search.json").write_text(json.dumps(search_idx, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    # sitemap
+    write_sitemap(articles_store)
 
     print(f"Klaar. Artikelen in store: {len(articles_store)}")
 
