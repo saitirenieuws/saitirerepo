@@ -23,3 +23,49 @@ jobs:
           git add -A
           git commit -m "auto: new posts" || true
           git push
+
+      - name: Sync to R2
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: auto
+          R2_ENDPOINT: https://${{ secrets.R2_ACCOUNT_ID }}.r2.cloudflarestorage.com
+        run: |
+          aws s3 sync ./content s3://${{ secrets.R2_BUCKET }}/content \
+            --endpoint-url "$R2_ENDPOINT" \
+            --delete
+
+          aws s3 sync ./public/images s3://${{ secrets.R2_BUCKET }}/public/images \
+            --endpoint-url "$R2_ENDPOINT" \
+            --delete
+
+          aws s3 sync ./data s3://${{ secrets.R2_BUCKET }}/data \
+            --endpoint-url "$R2_ENDPOINT" \
+            --delete
+
+          aws s3 sync ./assets s3://${{ secrets.R2_BUCKET }}/assets \
+            --endpoint-url "$R2_ENDPOINT" \
+            --delete
+
+          aws s3 sync ./categorie s3://${{ secrets.R2_BUCKET }}/categorie \
+            --endpoint-url "$R2_ENDPOINT" \
+            --delete
+
+          aws s3 sync ./search s3://${{ secrets.R2_BUCKET }}/search \
+            --endpoint-url "$R2_ENDPOINT" \
+            --delete
+
+          aws s3 cp ./index.html s3://${{ secrets.R2_BUCKET }}/index.html \
+            --endpoint-url "$R2_ENDPOINT"
+
+          aws s3 cp ./404.html s3://${{ secrets.R2_BUCKET }}/404.html \
+            --endpoint-url "$R2_ENDPOINT"
+
+          aws s3 cp ./feed.xml s3://${{ secrets.R2_BUCKET }}/feed.xml \
+            --endpoint-url "$R2_ENDPOINT"
+
+          aws s3 cp ./sitemap.xml s3://${{ secrets.R2_BUCKET }}/sitemap.xml \
+            --endpoint-url "$R2_ENDPOINT"
+
+          aws s3 cp ./robots.txt s3://${{ secrets.R2_BUCKET }}/robots.txt \
+            --endpoint-url "$R2_ENDPOINT"
